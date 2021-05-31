@@ -1,0 +1,205 @@
+<%- include('partials/header.ejs') %>
+
+
+<nav class="navbar navbar-dark navbar-expand-sm  fixed-top">
+	<div class="container">
+		
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#Navbar" aria-controls="Navbar" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<a class="navbar-brand mr-auto" href="#"><img src="logos.png" height="30" width="41"></a>
+
+		<div class="collapse navbar-collapse" id="Navbar">
+			
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item "><a class="nav-link" href="/logout"><span class="fa fa-home fa-lg"></span>
+						LOGOUT</a></li>
+				<% if(current_user){ %>
+
+                    <li class="nav-item">
+                        <a class="nav-link ml-5" href="#">
+                            Signed In As : <%=current_user.username%>
+                        </a>
+                    </li>
+
+                <% } %>
+			</ul>
+
+			<ul class="navbar-nav ms-auto">   
+				<% if(user_type == 't'){ %>    
+				<li class="nav-item ">
+					<a href="#" class="nav-link float-right" data-toggle="modal" data-target="#addAssignment"><span class="fa fa-plus-circle fa-lg"></span>Add</a>
+				</li>
+				<% } %>
+
+				<!-- <li class="nav-item mt-1">
+					<a class="nav-link float-right" href="#">
+						<i class="fa fa-user fa-lg" aria-hidden="true"></i> 
+						Student
+					</a>
+				</li> -->
+			
+			</ul>
+
+		</div>
+
+	</div>
+</nav>
+<div class="modal fade" id="addAssignment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+	  <div class="modal-content">
+		<div class="modal-header">
+			<img src="logos.png" height="30" width="41">
+		  <h5 class="modal-title" id="exampleModalLabel">Add Assignment</h5>
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		</div>
+		
+		<div class="modal-body row ">
+			
+			<form class="px-3" method="post" action="/addassignment" enctype="multipart/form-data">
+				<div class="form-group row">
+					<label for="loginn" class="col-sm-3 col-form-label">Title:</label>
+					<div class="col">
+						<input type="text" class="form-control" id="name" name="name" placeholder="Assignment Title" required>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="loginn" class="col-sm-3 col-form-label">Description:</label>
+					<div class="col">
+						<textarea placeholder="Describe your Assignment" class="form-control" id="description" name="description" rows="5" cols="50"></textarea>
+					</div>
+				</div>
+				<div class="row form-group">
+					<label for="date" class="col-sm-3 col-form-label">Deadline:</label>
+					<div class="col">
+						<input class="form-control" type="date" id="date" name=date>
+					</div>
+				</div>
+				<div class="row form-group">
+					<div class="col-md-8">
+						
+						<div class="form-group">
+						<label for="file1">Upload PDF <span class="fa fa-folder-open fa-lg"></span></label>
+						<input type="file" class="form-control-file" id="file1" name="assignment_file">
+						</div>
+						
+					</div>
+					<div class=" col-md-4">
+						
+					</div>
+				</div>
+				<div class="row">
+					<div class="col text-center">
+						<button type="submit" class="btn btn-primary"><i class="fa fa-tags fa-lg"></i> Assign</button>
+					</div>
+				</div>
+				
+			</form>
+		</div>
+		<div class="modal-footer">
+		  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		</div>
+	  </div>
+	</div>
+  </div>
+
+<header class="jumbotron">
+	<div class="container">
+		<div class="row row-header">
+			<div class="col-12 col-sm-2 align-self-left align-self-center">
+				<img src="logos.png" class="img-fluid">
+			</div>
+			<div class="col-12 col-sm-10">
+				<h1>G-Class</h1>
+				<p>Share the story of your classroom with families
+					Instantly share photos, videos, and announcements on Class Story, or privately message with any parent 😍
+					Parents easily join your class using any device
+				</p>
+			</div>
+			
+			<!-- <div class="col-12 col-sm align-self-right align-self-center">
+				<button type="submit" class="btn btn-warning"><a href="#here">
+						<bold>Reserve Table</bold>
+					</a></button>
+			</div> -->
+		</div>
+	</div>
+</header>
+
+<div class="container">
+
+<h4 class=" text-center">Assignment : <%= assignment.name %></h4>
+
+
+
+
+
+
+
+<div style="border:1px solid black;padding:10px;">
+
+	<% for(var i=0;i<user_in_ejs_file.length;i++){ %>
+
+	    <% if(user_in_ejs_file[i].type!="t"){ %>
+
+	        <p>
+	        	<b><%= user_in_ejs_file[i].username.toUpperCase() %></b>
+
+-
+	        	<% if(assignment.submissions.length===0){ %>
+
+					<span style="color:red;">Not submitted</span>
+
+				<% }else{ %>
+
+					
+					<% for(const submission of assignment.submissions){ %>
+
+					  	<% if (submission.submitted_by.username==user_in_ejs_file[i].username){ %>
+					  	  
+					  		<i><u>Submitted</u></i> at <%= submission.submitted_at %>
+
+					  		<a class="btn btn-primary" target="_blank" href="uploads/<%= submission.file %>">View</a>
+
+					  	<% } else{ %>
+
+					  		<span style="color:red;">Not submitted</span>
+
+					  	<% } %>
+
+					<% } %>
+
+				<% } %>
+
+
+
+	        </p>
+	    <% } %>	    
+	<% } %>
+
+</div>
+
+<br>
+<hr>
+<br>
+
+
+
+
+
+
+
+
+
+</form>
+</div>
+
+<br>
+
+
+<br>
+
+<%- include('partials/footer.ejs') %>

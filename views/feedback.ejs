@@ -1,0 +1,123 @@
+<%- include('partials/header.ejs') %>
+
+<body>
+    <!-- <img class="img-fluid" src="images/im2.JPG"> -->
+    <nav class="navbar navbar-dark navbar-expand-sm  fixed-top">
+        <div class="container">
+            
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#Navbar" aria-controls="Navbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <a class="navbar-brand mr-auto" href="/index"><img src="logos.png" height="30" width="41"></a>
+
+            <div class="collapse navbar-collapse" id="Navbar">
+                
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active"><a class="nav-link" href="/index"><span class="fa fa-home fa-lg"></span>
+                            Home</a></li>
+                    <li class="nav-item "><a class="nav-link" href="/about"><span
+                                class="fa fa-info fa-lg"></span> About</a></li>
+                    
+                    
+                </ul>
+
+            </div>
+
+        </div>
+    </nav>
+
+
+    <div class="modal fade" id="login1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+                <img src="logos.png" height="30" width="41">
+              <h5 class="modal-title" id="exampleModalLabel">Login to G-Class</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body row ">
+                
+                <form action="/login" method="POST">
+                    <div class="form-group row">
+                        <label for="loginn" class="col-sm-4 col-form-label">User Name:</label>
+                        <div class="col">
+                            <input type="text" class="form-control" id="user_name" name="username" placeholder="name" required>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="loginn" class="col-sm-4 col-form-label">Password:</label>
+                        <div class="col">
+                            <input type="password" class="form-control" id="user_pass" name="password" placeholder="password" required>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="offset-md-4 col-md-10">
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-sign-in"></i> Login</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    <header class="jumbotron">
+        <div class="container">
+            <div class="row row-header">
+                <div class="col-12 col-sm-2 align-self-left align-self-center">
+                    <img src="logos.png" class="img-fluid">
+                </div>
+                <div class="col-12 col-sm-10">
+                    <h1>G-Class</h1>
+                    <p>Share the story of your classroom with families
+                        Instantly share photos, videos, and announcements on Class Story, or privately message with any parent 😍
+                        Parents easily join your class using any device
+                    </p>
+                </div>
+                
+                <!-- <div class="col-12 col-sm align-self-right align-self-center">
+                    <button type="submit" class="btn btn-warning"><a href="#here">
+                            <bold>Reserve Table</bold>
+                        </a></button>
+                </div> -->
+            </div>
+        </div>
+    </header>
+
+
+
+
+
+
+<% for(let fb of feedbacks){ %>
+	
+	<div class="border border-danger border-sm m-5 p-5">
+		<p>
+			<b>NAME:</b> <%= fb.username.toUpperCase() %>
+		</p>
+		<p>
+			<b>Address:</b> <%= fb.areacode %>
+		</p>
+		<p>
+			<b>Telephone:</b> <%= fb.phone %>
+		</p>
+		<p>
+			<b>Email:</b> <%= fb.email_id %>
+		</p>
+		<p>
+			<b>FEEDBACK:</b> <%= fb.about.toUpperCase() %>
+		</p>
+	</div>
+
+<% } %>
+
+
+
+<%- include("partials/footer.ejs") %>

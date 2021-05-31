@@ -1,0 +1,541 @@
+<%- include('partials/header.ejs') %>
+
+
+	<nav class="navbar navbar-dark navbar-expand-sm  fixed-top">
+		<div class="container">
+
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#Navbar"
+				aria-controls="Navbar" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<a class="navbar-brand mr-auto" href="#"><img src="logos.png" height="30" width="41"></a>
+
+			<div class="collapse navbar-collapse" id="Navbar">
+
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item "><a class="nav-link" href="/logout"><span class="fa fa-home fa-lg"></span>
+							LOGOUT</a></li>
+
+					<% if(current_user){ %>
+
+						<li class="nav-item">
+							<a class="nav-link ml-5" href="#">
+								Signed In As : <%=current_user.username%>
+							</a>
+						</li>
+
+						<% } %>
+
+
+				</ul>
+
+				<ul class="navbar-nav ms-auto">
+					<% if(user_type=='t' ){ %>
+						<li class="nav-item ">
+							<a href="#" class="nav-link float-right" data-toggle="modal"
+								data-target="#addAssignment"><span class="fa fa-plus-circle fa-lg"></span>Add</a>
+						</li>
+						<% } %>
+
+							<!-- <li class="nav-item mt-1">
+					<a class="nav-link float-right" href="#">
+						<i class="fa fa-user fa-lg" aria-hidden="true"></i> 
+						Student
+					</a>
+				</li> -->
+
+				</ul>
+
+			</div>
+
+		</div>
+	</nav>
+
+	<div class="modal fade" id="addAssignment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<img src="logos.png" height="30" width="41">
+					<h5 class="modal-title" id="exampleModalLabel">Add Assignment</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<div class="modal-body row ">
+
+					<form class="px-3" method="post" action="/addassignment" enctype="multipart/form-data">
+
+						<div class="form-group row">
+
+							<label for="loginn" class="col-sm-3 col-form-label">Title:</label>
+
+							<div class="col">
+								<input type="text" class="form-control" id="name" name="name"
+									placeholder="Assignment Title" required>
+							</div>
+
+						</div>
+
+						<div class="form-group row">
+
+							<label for="loginn" class="col-sm-3 col-form-label">Description:</label>
+
+							<div class="col">
+								<textarea placeholder="Describe your Assignment" class="form-control" id="description"
+									name="description" rows="5" cols="50"></textarea>
+							</div>
+
+						</div>
+
+						<div class="row form-group">
+
+							<label for="date" class="col-sm-3 col-form-label">Deadline:</label>
+
+							<div class="col">
+								<input class="form-control" type="date" id="date" name=date >
+							</div>
+
+						</div>
+
+						<div class="row form-group">
+
+							<div class="col-md-8">
+
+								<div class="form-group">
+
+									<label for="file1">Upload PDF <span class="fa fa-folder-open fa-lg"></span></label>
+									<input type="file" class="form-control-file" id="file1" name="assignment_file">
+
+								</div>
+
+							</div>
+
+							<div class=" col-md-4">
+
+							</div>
+
+						</div>
+
+						<div class="row">
+
+							<div class="col text-center">
+								<button type="submit" class="btn btn-primary"><i class="fa fa-tags fa-lg"></i>
+									Assign</button>
+							</div>
+
+						</div>
+
+					</form>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<header class="jumbotron">
+		<div class="container">
+			<div class="row row-header">
+				<div class="col-12 col-sm-2 align-self-left align-self-center">
+					<img src="logos.png" class="img-fluid">
+				</div>
+				<div class="col-12 col-sm-10">
+					<h1>G-Class</h1>
+					<p>Share the story of your classroom with families
+						Instantly share photos, videos, and announcements on Class Story, or privately message with any
+						parent 😍
+						Parents easily join your class using any device
+					</p>
+				</div>
+
+				<!-- <div class="col-12 col-sm align-self-right align-self-center">
+				<button type="submit" class="btn btn-warning"><a href="#here">
+						<bold>Reserve Table</bold>
+					</a></button>
+			</div> -->
+			</div>
+		</div>
+	</header>
+
+	
+
+	<div class="container">
+
+
+		<div class="row row-content">
+			<div class="col-12">
+				<ul class="nav nav-tabs">
+					<li class="nav-item">
+						<a class="nav-link active" href="#assignment" role="tab" data-toggle="tab">Assignments</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#student" role="tab" data-toggle="tab">Students</a>
+					</li>
+					<% if(current_user.type == 's'){%>
+					<li class="nav-item">
+						<a class="nav-link" href="#teacher" role="tab" data-toggle="tab">Teacher</a>
+					</li>
+					<%}%>
+				</ul>
+				<div class="tab-content">
+					<div role="tabpanel" class="tab-pane fade show active" id="assignment">
+					
+						<% for(let assignment of assignments){ %>
+
+							<% if(assignment.owner==current_user.username){ %>
+								<div class="row">
+						
+									<div class="col col-sm">
+						
+										<div class="card align-self-center">
+						
+											<img class="card-img-top" src="4.png" alt="Card image cap" style="height: 200px;">
+						
+											<div class="card-body">
+						
+												<form method="post" action="/submitassignment" enctype="multipart/form-data">
+						
+													<input type="hidden" value="<%= assignment._id %>" name="assignment">
+						
+													<% if(user_type=='s' ){ %>
+														<p class="card-text" style="float:right;background:lightgreen;">Teacher: <b>
+																<%= assignment.owner %></b>
+														</p>
+													<% } %>
+						
+													<h5 class="card-title">
+														<%= assignment.name %>
+													</h5>
+													<p class="card-text">
+														<%= assignment.description %>
+													</p>
+
+													<% if(assignment.due_date){ %>
+
+														<p class="card-text">Due Date: <%=
+																`${(assignment.due_date.getDate())}/${(assignment.due_date.getMonth()+1)}/${assignment.due_date.getFullYear()}`
+																%>
+														</p>			
+													<% } %>
+													
+				
+													<div class="row">
+				
+														<% if(assignment.file){ %>
+														
+															<div class="col-sm-12 my-2">
+																<a target="_blank" href="uploads/<%= assignment.file %>"
+																	class="btn btn-primary text-white">View Assignment</a>
+															</div>
+				
+														<% }if(user_type=='s' ){ %>
+				
+															<% if(assignment.is_submitted){ %>
+			
+																<h4 class="text-success px-3 text-center">Assignment submitted
+																	successfully</h4>
+			
+															<% }else{ %>
+			
+																<div class="col col-sm-10">
+		
+																	<form>
+																		<div class="form-group">
+																			<label for="file1">Upload Assignment <span
+																					class="fa fa-folder-open fa-lg"></span></label>
+																			<input type="file" name="stud_assignment_file"
+																				class="form-control-file" id="file1" required>
+																		</div>
+																	</form>
+		
+																</div>
+		
+																<div class="col col-sm-2 align-self-right">
+																	<input type="submit" class="btn btn-primary ">
+																</div>
+															<% } %>
+				
+				
+														<% }else{ %>
+				
+															<div class="col col-sm-4">
+
+																<% if(assignment.file){ %>
+															
+																	<a href="assignmentsubmissions?assignment=<%= assignment._id %>"
+																		class="btn btn-primary text-white">View
+																		Submissions
+																	</a>					
+
+																<% } %>
+
+																
+															</div>
+
+														<% } %>
+				
+													</div>
+						
+												</form>
+						
+											</div>
+						
+											<div class="card-footer text-muted">
+						
+												<div class="row">
+						
+													<% if(assignment.comments){ for(let comment of assignment.comments){ %>
+														<div class="col col-sm-3">
+															<p>By- <%= comment.created_by.username %>
+															</p>
+														</div>
+														<div class="col col-sm-9">
+															<input type="text" value="<%= comment.name %>" class="form-control" id="comment"
+																name="comment" placeholder="comment" readonly>
+														</div>
+														<% }} %>
+						
+												</div>
+						
+												<form id="commentform" action="/assignmentcomment" method="post">
+						
+													<div class="row">
+														<input type="hidden" value="<%= assignment._id %>" name="assignment">
+						
+														<div class="col col-sm-11">
+															<input type="text" class="form-control" id="comment" name="comment"
+																placeholder="comment" required>
+														</div>
+						
+														<div class="col col-sm-1">
+															<button type="submit"><span class="fa fa-paper-plane fa-lg"></span></button>
+														</div>
+						
+													</div>
+						
+												</form>
+						
+											</div>
+						
+										</div>
+						
+									</div>
+						
+								</div>
+							<% } %>
+
+							<%if(user_type=='s' ) {%>
+								<div class="row">
+					
+									<div class="col col-sm">
+				
+										<div class="card align-self-center">
+				
+											<img class="card-img-top" src="4.png" alt="Card image cap" style="height: 200px;">
+				
+											<div class="card-body">
+				
+												<form method="post" action="/submitassignment" enctype="multipart/form-data">
+				
+													<input type="hidden" value="<%= assignment._id %>" name="assignment">
+				
+													<% if(user_type=='s' ){ %>
+														<p class="card-text" style="float:right;background:lightgreen;">Teacher: <b>
+																<%= assignment.owner %></b>
+														</p>
+													<% } %>
+				
+													<h5 class="card-title">
+														<%= assignment.name %>
+													</h5>
+													<p class="card-text">
+														<%= assignment.description %>
+													</p>
+													<% if(assignment.due_date){ %>
+
+														<p class="card-text">Due Date: <%=
+																`${(assignment.due_date.getDate())}/${(assignment.due_date.getMonth()+1)}/${assignment.due_date.getFullYear()}`
+																%>
+														</p>
+													<% } %>
+		
+													<div class="row">
+		
+														<% if(assignment.file){ %>
+										
+
+															<div class="col-sm-12 my-2">
+																<a target="_blank" href="uploads/<%= assignment.file %>"
+																	class="btn btn-primary text-white">View Assignment</a>
+															</div>
+
+															<% if(assignment.is_submitted){ %>
+
+																<h4 class="text-success px-3 text-center">Assignment submitted
+																	successfully</h4>
+
+															<% }else{ %>
+
+																<div class="col col-sm-10">
+
+																	<form>
+																		<div class="form-group">
+																			<label for="file1">Upload Assignment <span
+																					class="fa fa-folder-open fa-lg"></span></label>
+																			<input type="file" name="stud_assignment_file"
+																				class="form-control-file" id="file1" required>
+																		</div>
+																	</form>
+
+																</div>
+
+																<div class="col col-sm-2 align-self-right">
+																	<input type="submit" class="btn btn-primary ">
+																</div>
+															<% } %>
+
+
+														<% } %>
+		
+													</div>
+				
+												</form>
+				
+											</div>
+				
+											<div class="card-footer text-muted">
+				
+												<div class="row">
+				
+													<% if(assignment.comments){ for(let comment of assignment.comments){ %>
+														<div class="col col-sm-3">
+															<p>By- <%= comment.created_by.username %>
+															</p>
+														</div>
+														<div class="col col-sm-9">
+															<input type="text" value="<%= comment.name %>" class="form-control"
+																id="comment" name="comment" placeholder="comment" readonly>
+														</div>
+														<% }} %>
+				
+												</div>
+				
+												<form id="commentform" action="/assignmentcomment" method="post">
+				
+													<div class="row">
+														<input type="hidden" value="<%= assignment._id %>" name="assignment">
+				
+														<div class="col col-sm-11">
+															<input type="text" class="form-control" id="comment" name="comment"
+																placeholder="comment" required>
+														</div>
+				
+														<div class="col col-sm-1">
+															<button type="submit"><span class="fa fa-paper-plane fa-lg"></span></button>
+														</div>
+				
+													</div>
+				
+												</form>
+				
+											</div>
+				
+										</div>
+				
+									</div>
+					
+								</div>
+							<%} %>
+
+						<% } %>
+
+					</div>
+
+
+					<div role="tabpanel" class="tab-pane fade show " id="student">
+						<div class="row">
+							<div class="col col-sm-9">
+								<h3>Students</h3>
+							</div>
+							<div class="col col-sm-3">
+								<% for(var i=0;i<user_in_ejs_file.length;i++){ %>
+									<% if(user_in_ejs_file[i].type!="t" ){ %>
+										<% count=count+1 %>
+									<% } %>
+								<% } %>
+								<h3><%= count %> Students</h3> 
+							</div>
+						</div>
+						
+						<% for(var i=0;i<user_in_ejs_file.length;i++){ %>
+						
+							<% if(user_in_ejs_file[i].type!="t" ){ %>
+						
+								<p style="color:rgb(9, 126, 48);">
+									<b>
+										<%= user_in_ejs_file[i].username.toUpperCase() %>
+									</b>
+							<% } %>
+						<% } %>
+					</div>
+
+
+					<div role="tabpanel" class="tab-pane fade show " id="teacher">
+						<div class="row">
+							<div class="col col-sm-9">
+								<h3>Teacher</h3>
+							</div>
+							<div class="col col-sm-3">
+								<% for(var i=0;i<user_in_ejs_file.length;i++){ %>
+									<% if(user_in_ejs_file[i].type!="s" ){ %>
+										<% cnt=cnt+1 %>
+									<% } %>
+								<% } %>
+								<h3>
+									<%= cnt %> Teachers
+								</h3>
+							</div>
+						</div>
+						
+						<% for(var i=0;i<user_in_ejs_file.length;i++){ %>
+						
+							<% if(user_in_ejs_file[i].type!="s" ){ %>
+							
+								<% x=user_in_ejs_file[i].username %>
+
+								<p style="color:rgb(9, 126, 48);">
+									<b>
+										
+										<a href="/teacher/assignment/<%= x %>" target="_blank">
+											
+											<%= user_in_ejs_file[i].username.toUpperCase() %>	
+
+										</a>
+									</b>
+							<% } %>
+							
+						<% } %>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+		
+				
+</div>
+
+<br>
+
+
+<br>
+
+
+<%- include('partials/footer.ejs') %>

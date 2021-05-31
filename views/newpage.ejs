@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags always come first -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    
+    <!-- <link rel="stylesheet" href="style/style.css"> -->
+
+    <!-- <link rel="stylesheet" href="/node_modules/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/node_modules/bootstrap-social/bootstrap-social.css">
+    <link rel="stylesheet" href="/node_modules/bootstrap/dist/css/bootstrap.min.css"> -->
+
+    <!-- abc -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css"> -->
+
+    <style type="text/css">
+        .row-header{
+            margin:0px auto;
+            padding:0px;
+        }
+
+        .row-content {
+            margin:0px auto;
+            padding: 50px 0px 50px 0px;
+            border-bottom: 1px ridge;
+            min-height:400px;
+        }
+
+        .footer{
+            background-color: #D1C4E9;
+            margin:0px auto;
+            padding: 20px 0px 20px 0px;
+        }
+        .jumbotron {
+            padding:70px 30px 70px 30px;
+            margin:0px auto;
+            background: #9575CD ;
+            color:floralwhite;
+        }
+
+        .address{
+            font-size:80%;
+            margin:0px;
+            color:#0f0f0f;
+        }
+        body{
+            padding: 50px 0px 0px 0px;
+            z-index: 0;
+        }
+
+        .navbar-dark{
+            background-color: #512DA8;
+        }
+        .tab-content {
+            border-left: 1px solid #ddd;
+            border-right: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            padding: 10px;
+        }
+
+    </style>
+
+    <title>G-class</title>
+
+
+</head>
+
+<body>
+
+
+
+	<nav class="navbar navbar-dark navbar-expand-sm  fixed-top">
+		<div class="container">
+
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#Navbar"
+				aria-controls="Navbar" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<a class="navbar-brand mr-auto" href="#"><img src="https://i.postimg.cc/Hk3wgCzB/logos.png" height="30" width="41"></a>
+
+			<div class="collapse navbar-collapse" id="Navbar">
+
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item "><a class="nav-link" href="/logout"><span class="fa fa-home fa-lg"></span>
+							LOGOUT</a></li>
+
+					<% if(current_user){ %>
+
+						<li class="nav-item">
+							<a class="nav-link ml-5" href="#">
+								Signed In As : <%=current_user.username%>
+							</a>
+						</li>
+
+						<% } %>
+
+
+				</ul>
+
+				<ul class="navbar-nav ms-auto">
+					<% if(user_type=='t' ){ %>
+						<li class="nav-item ">
+							<a href="#" class="nav-link float-right" data-toggle="modal"
+								data-target="#addAssignment"><span class="fa fa-plus-circle fa-lg"></span>Add</a>
+						</li>
+						<% } %>
+
+							<!-- <li class="nav-item mt-1">
+					<a class="nav-link float-right" href="#">
+						<i class="fa fa-user fa-lg" aria-hidden="true"></i> 
+						Student
+					</a>
+				</li> -->
+
+				</ul>
+
+			</div>
+
+		</div>
+	</nav>
+
+	<div class="modal fade" id="addAssignment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<img src="logos.png" height="30" width="41">
+					<h5 class="modal-title" id="exampleModalLabel">Add Assignment</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+
+				<div class="modal-body row ">
+
+					<form class="px-3" method="post" action="/addassignment" enctype="multipart/form-data">
+
+						<div class="form-group row">
+
+							<label for="loginn" class="col-sm-3 col-form-label">Title:</label>
+
+							<div class="col">
+								<input type="text" class="form-control" id="name" name="name"
+									placeholder="Assignment Title" required>
+							</div>
+
+						</div>
+
+						<div class="form-group row">
+
+							<label for="loginn" class="col-sm-3 col-form-label">Description:</label>
+
+							<div class="col">
+								<textarea placeholder="Describe your Assignment" class="form-control" id="description"
+									name="description" rows="5" cols="50"></textarea>
+							</div>
+
+						</div>
+
+						<div class="row form-group">
+
+							<label for="date" class="col-sm-3 col-form-label">Deadline:</label>
+
+							<div class="col">
+								<input class="form-control" type="date" id="date" name=date>
+							</div>
+
+						</div>
+
+						<div class="row form-group">
+
+							<div class="col-md-8">
+
+								<div class="form-group">
+
+									<label for="file1">Upload PDF <span class="fa fa-folder-open fa-lg"></span></label>
+									<input type="file" class="form-control-file" id="file1" name="assignment_file">
+
+								</div>
+
+							</div>
+
+							<div class=" col-md-4">
+
+							</div>
+
+						</div>
+
+						<div class="row">
+
+							<div class="col text-center">
+								<button type="submit" class="btn btn-primary"><i class="fa fa-tags fa-lg"></i>
+									Assign</button>
+							</div>
+
+						</div>
+
+					</form>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<header class="jumbotron">
+		<div class="container">
+			<div class="row row-header">
+				<div class="col-12 col-sm-2 align-self-left align-self-center">
+					<img src="https://i.postimg.cc/Hk3wgCzB/logos.png" class="img-fluid">
+				</div>
+				<div class="col-12 col-sm-10">
+					<h1>G-Class</h1>
+					<p>Share the story of your classroom with families
+						Instantly share photos, videos, and announcements on Class Story, or privately message with any
+						parent 😍
+						Parents easily join your class using any device
+					</p>
+				</div>
+
+				<!-- <div class="col-12 col-sm align-self-right align-self-center">
+				<button type="submit" class="btn btn-warning"><a href="#here">
+						<bold>Reserve Table</bold>
+					</a></button>
+			</div> -->
+			</div>
+		</div>
+	</header>
+
+	
+
+
+
+
+
+	<% for(let assignment of assignments){ %>
+					
+			<div class="row">
+	
+				<div class="col col-sm">
+	
+					<div class="border border-success p-3 m-5"">
+	
+						
+	
+						<div class=" p-2 m-2">
+	
+							<form method="post" action="/submitassignment" enctype="multipart/form-data">
+	
+								<input type="hidden" value="<%= assignment._id %>" name="assignment">
+	
+								<% if(user_type=='s' ){ %>
+									<p class="card-text" style="float:right;background:lightgreen;">Teacher: <b>
+										<%= assignment.owner %>
+									</b></p>
+								<% } %>
+	
+								<h5 class="card-title">
+									<%= assignment.name %>
+								</h5>
+								<p class="card-text">
+									<%= assignment.description %>
+								</p>
+								<% if(assignment.due_date){ %>
+
+									<p class="card-text">Due Date: <%=
+											`${(assignment.due_date.getDate())}/${(assignment.due_date.getMonth()+1)}/${assignment.due_date.getFullYear()}`
+											%>
+									</p>
+								<% } %>
+
+								<div class="row">
+
+									<% if(assignment.file){ %>
+										
+
+										<div class="col-sm-12 my-2">
+											<a target="_blank" href="uploads/<%= assignment.file %>"
+												class="btn btn-primary text-white">View Assignment</a>
+										</div>
+
+										<% if(assignment.is_submitted){ %>
+
+											<h4 class="text-success px-3 text-center">Assignment submitted
+												successfully</h4>
+
+										<% }else{ %>
+
+											<div class="col col-sm-10">
+
+												<form>
+													<div class="form-group">
+														<label for="file1">Upload Assignment <span
+																class="fa fa-folder-open fa-lg"></span></label>
+														<input type="file" name="stud_assignment_file"
+															class="form-control-file" id="file1" required>
+													</div>
+												</form>
+
+											</div>
+
+											<div class="col col-sm-2 align-self-right">
+												<input type="submit" class="btn btn-primary ">
+											</div>
+										<% } %>
+
+
+									<% } %>
+
+								</div>
+	
+							</form>
+	
+						</div>
+	
+						<div class="card-footer text-muted">
+	
+							<div class="row">
+	
+								<% if(assignment.comments){ for(let comment of assignment.comments){ %>
+									<div class="col col-sm-3">
+										<p>By- <%= comment.created_by.username %>
+										</p>
+									</div>
+									<div class="col col-sm-9">
+										<input type="text" value="<%= comment.name %>" class="form-control" id="comment"
+											name="comment" placeholder="comment" readonly>
+									</div>
+									<% }} %>
+	
+							</div>
+	
+							<form id="commentform" action="/assignmentcomment" method="post">
+	
+								<div class="row">
+									<input type="hidden" value="<%= assignment._id %>" name="assignment">
+	
+									<div class="col col-sm-11">
+										<input type="text" class="form-control" id="comment" name="comment"
+											placeholder="comment" required>
+									</div>
+	
+									<div class="col col-sm-1">
+										<button type="submit"><span class="fa fa-paper-plane fa-lg"></span></button>
+									</div>
+	
+								</div>
+	
+							</form>
+	
+						</div>
+	
+					</div>
+	
+				</div>
+	
+			</div>
+			
+
+	<% } %>
+
+
+
+
+
+<footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-4 offset-1 col-sm-2">
+                    <h5>Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#"><span class="fa fa-home fa-lg"></span> Home</a></li>
+                        <li><a href="/about"><span class="fa fa-info fa-lg"></span> About</a></li>
+                    </ul>
+                </div>
+                <div class="col-7 col-sm-5">
+                    <h5>Contact US</h5>
+                    <address>
+                      ICT 3rd floor <br>
+                      Heritage Institute of Technology<br>
+                      near Ruby Hospital<br>
+                      Kolkata west bengal<br>
+                      <i class="fa fa-phone fa-lg"></i>: +91 9113451623, +91 8825368686<br>
+                      +91 9874189313, +91 8340481857<br> 
+  
+                      <i class="fa fa-envelope fa-lg"></i>:  <a href="mailto:modimam123@gmail.comt">modimam123@gmail.com</a>
+                    </address>
+                </div>
+                <div class="col-12 col-sm-4 align-self-center">
+                    <div class="text-center">
+                        <a class="btn btn-social-icon btn-google" href="http://google.com/+"><i
+                                class="fa fa-google-plus"></i></a>
+                        <a class="btn btn-social-icon btn-facebook"
+                            href="http://www.facebook.com/profile.php?id="><i class="fa fa-facebook"></i></a>
+                        <a class="btn btn-social-icon btn-linkedin" href="http://www.linkedin.com/in/"><i
+                                class="fa fa-linkedin"></i></a>
+                        <a class="btn btn-social-icon btn-twitter" href="http://twitter.com/"><i
+                                class="fa fa-twitter"></i></a>
+                        <a class="btn btn-social-icon btn-google" href="http://youtube.com/"><i
+                                class="fa fa-youtube"></i></a>
+                        <a class="btn btn-social-icon" href="mailto:"><i class="fa fa-envelope-o"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-auto">
+                    <p>© Copyright 2018 G-class Final year project</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- <script src="/node_modules/jquery/dist/jquery.slim.min.js"></script>
+    <script src="/node_modules/popper.js/dist/umd/popper.min.js"></script>
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+     -->
+     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>	
