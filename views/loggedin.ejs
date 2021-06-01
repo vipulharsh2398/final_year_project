@@ -168,8 +168,8 @@
 	<div class="container">
 
 
-		<div class="row row-content">
-			<div class="col-12">
+		<div class="row row-content ">
+			<div class="col-12 ">
 				<ul class="nav nav-tabs">
 					<li class="nav-item">
 						<a class="nav-link active" href="#assignment" role="tab" data-toggle="tab">Assignments</a>
@@ -177,16 +177,28 @@
 					<li class="nav-item">
 						<a class="nav-link" href="#student" role="tab" data-toggle="tab">Students</a>
 					</li>
+
 					<% if(current_user.type == 's'){%>
-					<li class="nav-item">
-						<a class="nav-link" href="#teacher" role="tab" data-toggle="tab">Teacher</a>
-					</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#teacher" role="tab" data-toggle="tab">Teacher</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link" href="#due" role="tab" data-toggle="tab">Due Assignments</a>
+						</li>
+
 					<%}%>
+
+					
+
+
+
 				</ul>
 				<div class="tab-content">
 					<div role="tabpanel" class="tab-pane fade show active" id="assignment">
 					
 						<% for(let assignment of assignments){ %>
+							
 
 							<% if(assignment.owner==current_user.username){ %>
 								<div class="row">
@@ -221,7 +233,7 @@
 														<p class="card-text">Due Date: <%=
 																`${(assignment.due_date.getDate())}/${(assignment.due_date.getMonth()+1)}/${assignment.due_date.getFullYear()}`
 																%>
-														</p>			
+														</p>
 													<% } %>
 													
 				
@@ -453,6 +465,8 @@
 								</div>
 							<%} %>
 
+							
+							
 						<% } %>
 
 					</div>
@@ -472,7 +486,7 @@
 								<h3><%= count %> Students</h3> 
 							</div>
 						</div>
-						
+						<hr>
 						<% for(var i=0;i<user_in_ejs_file.length;i++){ %>
 						
 							<% if(user_in_ejs_file[i].type!="t" ){ %>
@@ -489,7 +503,7 @@
 					<div role="tabpanel" class="tab-pane fade show " id="teacher">
 						<div class="row">
 							<div class="col col-sm-9">
-								<h3>Teacher</h3>
+								<h2>Teacher</h2>
 							</div>
 							<div class="col col-sm-3">
 								<% for(var i=0;i<user_in_ejs_file.length;i++){ %>
@@ -497,12 +511,12 @@
 										<% cnt=cnt+1 %>
 									<% } %>
 								<% } %>
-								<h3>
+								<h2>
 									<%= cnt %> Teachers
-								</h3>
+								</h2>
 							</div>
 						</div>
-						
+						<hr>
 						<% for(var i=0;i<user_in_ejs_file.length;i++){ %>
 						
 							<% if(user_in_ejs_file[i].type!="s" ){ %>
@@ -511,18 +525,145 @@
 
 								<p style="color:rgb(9, 126, 48);">
 									<b>
-										
 										<a href="/teacher/assignment/<%= x %>" target="_blank">
 											
-											<%= user_in_ejs_file[i].username.toUpperCase() %>	
-
+											<h4 style="display:inline;">
+												<%= user_in_ejs_file[i].username.toUpperCase() %>
+											</h4>
 										</a>
+											-
+											<h6 class="text-success" style="display:inline;">
+												<%= user_in_ejs_file[i].subject %>	
+											</h6>
+										
 									</b>
 							<% } %>
 							
 						<% } %>
 
 					</div>
+
+
+					<div role="tabpanel" class="tab-pane fade show " id="due">
+						
+						<% for(let assignment of assignments){ %>
+
+							<%if(assignment.file && !assignment.is_submitted) {%>
+
+								<div class="row">
+					
+									<div class="col col-sm">
+				
+										<div class="card align-self-center">
+				
+											<img class="card-img-top" src="4.png" alt="Card image cap" style="height: 200px;">
+				
+											<div class="card-body">
+				
+												<form method="post" action="/submitassignment" enctype="multipart/form-data">
+				
+													<input type="hidden" value="<%= assignment._id %>" name="assignment">
+				
+													
+													<p class="card-text" style="float:right;background:lightgreen;">Teacher: <b>
+															<%= assignment.owner %></b>
+													</p>
+													
+				
+													<h5 class="card-title">
+														<%= assignment.name %>
+													</h5>
+													<p class="card-text">
+														<%= assignment.description %>
+													</p>
+													<% if(assignment.due_date){ %>
+
+														<p class="card-text">Due Date: <%=
+																`${(assignment.due_date.getDate())}/${(assignment.due_date.getMonth()+1)}/${assignment.due_date.getFullYear()}`
+																%>
+														</p>
+													<% } %>
+		
+													<div class="row">
+		
+														<div class="col-sm-12 my-2">
+															<a target="_blank" href="uploads/<%= assignment.file %>"
+																class="btn btn-primary text-white">View Assignment</a>
+														</div>
+
+														
+
+														<div class="col col-sm-10">
+
+															<form>
+																<div class="form-group">
+																	<label for="file1">Upload Assignment <span
+																			class="fa fa-folder-open fa-lg"></span></label>
+																	<input type="file" name="stud_assignment_file"
+																		class="form-control-file" id="file1" required>
+																</div>
+															</form>
+
+														</div>
+
+														<div class="col col-sm-2 align-self-right">
+															<input type="submit" class="btn btn-primary ">
+														</div>
+
+													</div>
+				
+												</form>
+				
+											</div>
+				
+											<div class="card-footer text-muted">
+				
+												<div class="row">
+				
+													<% if(assignment.comments){ for(let comment of assignment.comments){ %>
+														<div class="col col-sm-3">
+															<p>By- <%= comment.created_by.username %>
+															</p>
+														</div>
+														<div class="col col-sm-9">
+															<input type="text" value="<%= comment.name %>" class="form-control"
+																id="comment" name="comment" placeholder="comment" readonly>
+														</div>
+														<% }} %>
+				
+												</div>
+				
+												<form id="commentform" action="/assignmentcomment" method="post">
+				
+													<div class="row">
+														<input type="hidden" value="<%= assignment._id %>" name="assignment">
+				
+														<div class="col col-sm-11">
+															<input type="text" class="form-control" id="comment" name="comment"
+																placeholder="comment" required>
+														</div>
+				
+														<div class="col col-sm-1">
+															<button type="submit"><span class="fa fa-paper-plane fa-lg"></span></button>
+														</div>
+				
+													</div>
+				
+												</form>
+				
+											</div>
+				
+										</div>
+				
+									</div>
+					
+								</div>
+							<%} %>
+
+						<% } %>
+
+					</div>
+
 
 				</div>
 			</div>

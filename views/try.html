@@ -1,266 +1,545 @@
 <%- include('partials/header.ejs') %>
 
 
-    <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light ">
-      <div class="container">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" href="#">Disabled</a>
-            </li>
-          </ul>
-          <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-          </form>
-        </div>
-      </div>
-      </nav> -->
-      <nav class="navbar navbar-dark navbar-expand-sm  fixed-top">
+    <nav class="navbar navbar-dark navbar-expand-sm  fixed-top">
         <div class="container">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#Navbar">
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#Navbar"
+                aria-controls="Navbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand mr-auto" href="/index"><img src="logos.png" height="30" width="41"></a>
+
+            <a class="navbar-brand mr-auto" href="#"><img src="logos.png" height="30" width="41"></a>
+
             <div class="collapse navbar-collapse" id="Navbar">
+
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item "><a class="nav-link" href="/index"><span class="fa fa-home fa-lg"></span>
-                            Home</a></li>
-                    <li class="nav-item active "><a class="nav-link" href="#"><span
-                                class="fa fa-info fa-lg"></span> About</a></li>
+                    <li class="nav-item "><a class="nav-link" href="/logout"><span class="fa fa-home fa-lg"></span>
+                            LOGOUT</a></li>
+
+                    <% if(current_user){ %>
+
+                        <li class="nav-item">
+                            <a class="nav-link ml-5" href="#">
+                                Signed In As : <%=current_user.username%>
+                            </a>
+                        </li>
+
+                        <% } %>
+
+
                 </ul>
+
+                <ul class="navbar-nav ms-auto">
+                    <% if(user_type=='t' ){ %>
+                        <li class="nav-item ">
+                            <a href="#" class="nav-link float-right" data-toggle="modal"
+                                data-target="#addAssignment"><span class="fa fa-plus-circle fa-lg"></span>Add</a>
+                        </li>
+                        <% } %>
+
+                            <!-- <li class="nav-item mt-1">
+                    <a class="nav-link float-right" href="#">
+                        <i class="fa fa-user fa-lg" aria-hidden="true"></i> 
+                        Student
+                    </a>
+                </li> -->
+
+                </ul>
+
             </div>
+
         </div>
     </nav>
-    <header class="jumbotron">
-      <div class="container">
-          <div class="row row-header">
-              <div class="col-12 col-sm-2 align-self-left align-self-center">
-                  <img src="logos.png" class="img-fluid">
-              </div>
-              <div class="col-12 col-sm-10">
-                  <h1>G-Class</h1>
-                  <p>Share the story of your classroom with families
-                    Instantly share photos, videos, and announcements on Class Story, or privately message with any parent 😍
-                    Parents easily join your class using any device
-                  </p>
-              </div>
-              
-              <!-- <div class="col-12 col-sm align-self-right align-self-center">
-                  <button type="submit" class="btn btn-warning"><a href="#here">
-                          <bold>Reserve Table</bold>
-                      </a></button>
-              </div> -->
-          </div>
-      </div>
-  </header>
 
-    <div class="container">
-        <div class="col-12">
-            <div>
-               <h3>About Us</h3>
-               <ol class="col-12 breadcrumb">
-                    <li class="breadcrumb-item"><a href="/index">Home</a></li>
-                    <li class="breadcrumb-item active">About Us</li>
-            </ol>
-               <hr>
-            </div>
-        </div>
+    <div class="modal fade" id="addAssignment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <img src="logos.png" height="30" width="41">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Assignment</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
 
-        <div class="row row-content">
-            <div class="col-sm-6">
-                <h2>Our Group</h2>
-              <p>content about our group goes here.</p>  
-              </div>
-            <div class="col-sm">
-                  <div class="card">
-                    <h3 class="card-header bg-primary text-white">Projects and seminar done</h3>
-                    <div class="card-body">
-                        <dl class="row">
-                            <dt class="col-6">p1</dt>
-                            <dd class="col-6">des</dd>
-                            <dt class="col-6">p2</dt>
-                            <dd class="col-6">des.</dd>
-                            <dt class="col-6">p3</dt>
-                            <dd class="col-6">des</dd>
-                            <dt class="col-6">p4</dt>
-                            <dd class="col-6">des</dd>
-                        </dl>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
-              <div class="card card-body bg-light">
-                  <blockquote class="blockquote">
-                      <p class="mb-0">Quote goes here.</p>
-                      <footer class="blockquote-footer">quoter name,
-                          <cite title="Source Title">quote source here</cite>
-                      </footer>
-                  </blockquote>
-              </div>
-          </div>
-        </div>
+                <div class="modal-body row ">
 
+                    <form class="px-3" method="post" action="/addassignment" enctype="multipart/form-data">
 
-        <div class="row row-content">
-            <div class="col-12">
-                <h2>Team member</h2>
-                <ul class="nav nav-tabs">
-                  <li class="nav-item">
-                    <a class="nav-link active" href="#peter" role="tab" data-toggle="tab">Md Modassir Imam</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link " href="#danny" role="tab" data-toggle="tab">Yashika Mundhra</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link " href="#agumbe" role="tab" data-toggle="tab">Vipul Harsh</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link " href="#alberto" role="tab" data-toggle="tab">Balpreet Singh</a>
-                  </li>
-                </ul>
-                <div class="tab-content">
-                  <div role="tabpanel" class="tab-pane fade show active" id="peter">
-                      <h3>Md Modassir Imam <small>Full Stack developer</small></h3>
-                      <p class="d-none d-sm-block d-md-block">about goes here.</p>
-                  </div>
-                  <div role="tabpanel" class="tab-pane fade " id="danny">
-                      <h3>Yashika Mundhra <small>Web Developer</small></h3>
-                      <p class="d-none d-sm-block d-md-block">content goes here.</p>
-                  </div>
-                    <div role="tabpanel" class="tab-pane fade " id="agumbe">
-                      <h3>Vipul Harsh <small>Web Developer</small></h3>
-                      <p class="d-none d-sm-block d-md-block">content goes here.</p>  
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade " id="alberto">
-                      <h3>Balpreet Singh <small>Web Developer</small></h3>
-                      <p class="d-none d-sm-block d-md-block">content goes here.</p>  
-                    </div>
-                 </div>
-              </div>
-              <!-- <br>
-              <hr> -->
-            <!-- <div class="card">
-              <img class="card-img-top img-fluid" src="img/imam.JPG" alt="Imam_khan">
-              <div class="class-body">
-                <h2 class="card-title">Modassir imam</h2>
-                <h4>Executive cheif</h4>
-                <p class="card-text">award winner 3 star shef who cooks so well 
-                  that you will be licking your fingeres.
-                </p>
-              </div>
-            </div> -->
-       </div>
-       <div class="row row-content">
-        <div class="col-12">
-            <h3>Send us your Feedback</h3>
-        </div>
-        <div class="col-12 col-md-9">
-            <!-- Form goes here -->
-            
+                        <div class="form-group row">
 
-            <form action="/add/feedback" method="POST">
-                
-                <div class="form-group row">
-                    <label for="firstname" class="col-md-2 col-form-label">First Name</label>
-                    <div class="col-md-10">
-                        <input type="text" class="form-control" id="firstname" name="firstname"
-                            placeholder="First Name" required>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="lastname" class="col-md-2 col-form-lable">Last Name</label>
-                    <div class="col-md-10">
-                        <input type="text" class="form-control" id="lastname" name="lastname"
-                            placeholder="Last Name">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="telnum" class="col-12 col-md-2 col-form-label">Contact Tel.</label>
-                    <div class="col-5 col-md-3">
-                        <input type="tel" class="form-control" id="areacode" name="areacode"
-                            placeholder="Area code" required>
-                    </div>
-                    <div class="col-7 col-md-7">
-                        <input type="tel" class="form-control" id="telnum" name="telnum"
-                            placeholder="Tel. number" required>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label for="emailid" class="col-md-2 col-form-label">Email</label>
-                    <div class="col-md-10">
-                        <input type="email" class="form-control" id="emailid" name="emailid"
-                            placeholder="Email" required>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-md-6 offset-md-2">
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" name="approve" id="approve"
-                                value="">
-                            <label class="form-check-label" for="approve">
-                                <strong>May we contact you?</strong>
-                            </label>
+                            <label for="loginn" class="col-sm-3 col-form-label">Title:</label>
+
+                            <div class="col">
+                                <input type="text" class="form-control" id="name" name="name"
+                                    placeholder="Assignment Title" required>
+                            </div>
+
                         </div>
-                    </div>
-                    <div class="col-md-3 offset-md-1">
-                        <select class="form-control">
-                            <option>Tel.</option>
-                            <option>Email</option>
-                        </select>
-                    </div>
+
+                        <div class="form-group row">
+
+                            <label for="loginn" class="col-sm-3 col-form-label">Description:</label>
+
+                            <div class="col">
+                                <textarea placeholder="Describe your Assignment" class="form-control" id="description"
+                                    name="description" rows="5" cols="50"></textarea>
+                            </div>
+
+                        </div>
+
+                        <div class="row form-group">
+
+                            <label for="date" class="col-sm-3 col-form-label">Deadline:</label>
+
+                            <div class="col">
+                                <input class="form-control" type="date" id="date" name=date >
+                            </div>
+
+                        </div>
+
+                        <div class="row form-group">
+
+                            <div class="col-md-8">
+
+                                <div class="form-group">
+
+                                    <label for="file1">Upload PDF <span class="fa fa-folder-open fa-lg"></span></label>
+                                    <input type="file" class="form-control-file" id="file1" name="assignment_file">
+
+                                </div>
+
+                            </div>
+
+                            <div class=" col-md-4">
+
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+
+                            <div class="col text-center">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-tags fa-lg"></i>
+                                    Assign</button>
+                            </div>
+
+                        </div>
+
+                    </form>
+
                 </div>
-                <div class="form-group row">
-                    <label for="feedback" class="col-md-2 col-form-label">Your Feedback</label>
-                    <div class="col-md-10">
-                        <textarea class="form-control" id="feedback" name="description" rows="4" required></textarea>
-                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 </div>
-                <div class="form-group row">
-                    <div class="offset-md-2 col-md-10">
-                        <button type="submit" class="btn btn-primary">Send Feedback</button>
-                    </div>
-                </div>
-
-            </form>
-
-
-
-
+            </div>
         </div>
-        <div class="col-12 col-md">
-        </div>
-    </div> 
     </div>
 
-   <%- include('partials/footer.ejs') %>
+
+    <header class="jumbotron">
+        <div class="container">
+            <div class="row row-header">
+                <div class="col-12 col-sm-2 align-self-left align-self-center">
+                    <img src="logos.png" class="img-fluid">
+                </div>
+                <div class="col-12 col-sm-10">
+                    <h1>G-Class</h1>
+                    <p>Share the story of your classroom with families
+                        Instantly share photos, videos, and announcements on Class Story, or privately message with any
+                        parent 😍
+                        Parents easily join your class using any device
+                    </p>
+                </div>
+
+                <!-- <div class="col-12 col-sm align-self-right align-self-center">
+                <button type="submit" class="btn btn-warning"><a href="#here">
+                        <bold>Reserve Table</bold>
+                    </a></button>
+            </div> -->
+            </div>
+        </div>
+    </header>
+
+    
+
+    <div class="container">
 
 
+        <div class="row row-content">
+            <div class="col-12">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#assignment" role="tab" data-toggle="tab">Assignments</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#student" role="tab" data-toggle="tab">Students</a>
+                    </li>
+                    <% if(current_user.type == 's'){%>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#teacher" role="tab" data-toggle="tab">Teacher</a>
+                    </li>
+                    <%}%>
+
+                    
+
+                    
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade show active" id="assignment">
+                    
+                        <% for(let assignment of assignments){ %>
+
+                            <% if(assignment.owner==current_user.username){ %>
+                                <div class="row">
+                        
+                                    <div class="col col-sm">
+                        
+                                        <div class="card align-self-center">
+                        
+                                            <img class="card-img-top" src="4.png" alt="Card image cap" style="height: 200px;">
+                        
+                                            <div class="card-body">
+                        
+                                                <form method="post" action="/submitassignment" enctype="multipart/form-data">
+                        
+                                                    <input type="hidden" value="<%= assignment._id %>" name="assignment">
+                        
+                                                    <% if(user_type=='s' ){ %>
+                                                        <p class="card-text" style="float:right;background:lightgreen;">Teacher: <b>
+                                                                <%= assignment.owner %></b>
+                                                        </p>
+                                                    <% } %>
+                        
+                                                    <h5 class="card-title">
+                                                        <%= assignment.name %>
+                                                    </h5>
+                                                    <p class="card-text">
+                                                        <%= assignment.description %>
+                                                    </p>
+
+                                                    <% if(assignment.due_date){ %>
+
+                                                        <p class="card-text">Due Date: <%=
+                                                                `${(assignment.due_date.getDate())}/${(assignment.due_date.getMonth()+1)}/${assignment.due_date.getFullYear()}`
+                                                                %>
+                                                        </p>
+                                                    <% } %>
+                                                    
+                
+                                                    <div class="row">
+                
+                                                        <% if(assignment.file){ %>
+                                                        
+                                                            <div class="col-sm-12 my-2">
+                                                                <a target="_blank" href="uploads/<%= assignment.file %>"
+                                                                    class="btn btn-primary text-white">View Assignment</a>
+                                                            </div>
+                
+                                                        <% }if(user_type=='s' ){ %>
+                
+                                                            <% if(assignment.is_submitted){ %>
+            
+                                                                <h4 class="text-success px-3 text-center">Assignment submitted
+                                                                    successfully</h4>
+            
+                                                            <% }else{ %>
+            
+                                                                <div class="col col-sm-10">
+        
+                                                                    <form>
+                                                                        <div class="form-group">
+                                                                            <label for="file1">Upload Assignment <span
+                                                                                    class="fa fa-folder-open fa-lg"></span></label>
+                                                                            <input type="file" name="stud_assignment_file"
+                                                                                class="form-control-file" id="file1" required>
+                                                                        </div>
+                                                                    </form>
+        
+                                                                </div>
+        
+                                                                <div class="col col-sm-2 align-self-right">
+                                                                    <input type="submit" class="btn btn-primary ">
+                                                                </div>
+                                                            <% } %>
+                
+                
+                                                        <% }else{ %>
+                
+                                                            <div class="col col-sm-4">
+
+                                                                <% if(assignment.file){ %>
+                                                            
+                                                                    <a href="assignmentsubmissions?assignment=<%= assignment._id %>"
+                                                                        class="btn btn-primary text-white">View
+                                                                        Submissions
+                                                                    </a>                    
+
+                                                                <% } %>
+
+                                                                
+                                                            </div>
+
+                                                        <% } %>
+                
+                                                    </div>
+                        
+                                                </form>
+                        
+                                            </div>
+                        
+                                            <div class="card-footer text-muted">
+                        
+                                                <div class="row">
+                        
+                                                    <% if(assignment.comments){ for(let comment of assignment.comments){ %>
+                                                        <div class="col col-sm-3">
+                                                            <p>By- <%= comment.created_by.username %>
+                                                            </p>
+                                                        </div>
+                                                        <div class="col col-sm-9">
+                                                            <input type="text" value="<%= comment.name %>" class="form-control" id="comment"
+                                                                name="comment" placeholder="comment" readonly>
+                                                        </div>
+                                                        <% }} %>
+                        
+                                                </div>
+                        
+                                                <form id="commentform" action="/assignmentcomment" method="post">
+                        
+                                                    <div class="row">
+                                                        <input type="hidden" value="<%= assignment._id %>" name="assignment">
+                        
+                                                        <div class="col col-sm-11">
+                                                            <input type="text" class="form-control" id="comment" name="comment"
+                                                                placeholder="comment" required>
+                                                        </div>
+                        
+                                                        <div class="col col-sm-1">
+                                                            <button type="submit"><span class="fa fa-paper-plane fa-lg"></span></button>
+                                                        </div>
+                        
+                                                    </div>
+                        
+                                                </form>
+                        
+                                            </div>
+                        
+                                        </div>
+                        
+                                    </div>
+                        
+                                </div>
+                            <% } %>
+
+                            <%if(user_type=='s' ) {%>
+                                <div class="row">
+                    
+                                    <div class="col col-sm">
+                
+                                        <div class="card align-self-center">
+                
+                                            <img class="card-img-top" src="4.png" alt="Card image cap" style="height: 200px;">
+                
+                                            <div class="card-body">
+                
+                                                <form method="post" action="/submitassignment" enctype="multipart/form-data">
+                
+                                                    <input type="hidden" value="<%= assignment._id %>" name="assignment">
+                
+                                                    <% if(user_type=='s' ){ %>
+                                                        <p class="card-text" style="float:right;background:lightgreen;">Teacher: <b>
+                                                                <%= assignment.owner %></b>
+                                                        </p>
+                                                    <% } %>
+                
+                                                    <h5 class="card-title">
+                                                        <%= assignment.name %>
+                                                    </h5>
+                                                    <p class="card-text">
+                                                        <%= assignment.description %>
+                                                    </p>
+                                                    <% if(assignment.due_date){ %>
+
+                                                        <p class="card-text">Due Date: <%=
+                                                                `${(assignment.due_date.getDate())}/${(assignment.due_date.getMonth()+1)}/${assignment.due_date.getFullYear()}`
+                                                                %>
+                                                        </p>
+                                                    <% } %>
+        
+                                                    <div class="row">
+        
+                                                        <% if(assignment.file){ %>
+                                        
+
+                                                            <div class="col-sm-12 my-2">
+                                                                <a target="_blank" href="uploads/<%= assignment.file %>"
+                                                                    class="btn btn-primary text-white">View Assignment</a>
+                                                            </div>
+
+                                                            <% if(assignment.is_submitted){ %>
+
+                                                                <h4 class="text-success px-3 text-center">Assignment submitted
+                                                                    successfully</h4>
+
+                                                            <% }else{ %>
+
+                                                                <div class="col col-sm-10">
+
+                                                                    <form>
+                                                                        <div class="form-group">
+                                                                            <label for="file1">Upload Assignment <span
+                                                                                    class="fa fa-folder-open fa-lg"></span></label>
+                                                                            <input type="file" name="stud_assignment_file"
+                                                                                class="form-control-file" id="file1" required>
+                                                                        </div>
+                                                                    </form>
+
+                                                                </div>
+
+                                                                <div class="col col-sm-2 align-self-right">
+                                                                    <input type="submit" class="btn btn-primary ">
+                                                                </div>
+                                                            <% } %>
 
 
+                                                        <% } %>
+        
+                                                    </div>
+                
+                                                </form>
+                
+                                            </div>
+                
+                                            <div class="card-footer text-muted">
+                
+                                                <div class="row">
+                
+                                                    <% if(assignment.comments){ for(let comment of assignment.comments){ %>
+                                                        <div class="col col-sm-3">
+                                                            <p>By- <%= comment.created_by.username %>
+                                                            </p>
+                                                        </div>
+                                                        <div class="col col-sm-9">
+                                                            <input type="text" value="<%= comment.name %>" class="form-control"
+                                                                id="comment" name="comment" placeholder="comment" readonly>
+                                                        </div>
+                                                        <% }} %>
+                
+                                                </div>
+                
+                                                <form id="commentform" action="/assignmentcomment" method="post">
+                
+                                                    <div class="row">
+                                                        <input type="hidden" value="<%= assignment._id %>" name="assignment">
+                
+                                                        <div class="col col-sm-11">
+                                                            <input type="text" class="form-control" id="comment" name="comment"
+                                                                placeholder="comment" required>
+                                                        </div>
+                
+                                                        <div class="col col-sm-1">
+                                                            <button type="submit"><span class="fa fa-paper-plane fa-lg"></span></button>
+                                                        </div>
+                
+                                                    </div>
+                
+                                                </form>
+                
+                                            </div>
+                
+                                        </div>
+                
+                                    </div>
+                    
+                                </div>
+                            <%} %>
+
+                        <% } %>
+
+                    </div>
 
 
+                    <div role="tabpanel" class="tab-pane fade show " id="student">
+                        <div class="row">
+                            <div class="col col-sm-9">
+                                <h3>Students</h3>
+                            </div>
+                            <div class="col col-sm-3">
+                                <% for(var i=0;i<user_in_ejs_file.length;i++){ %>
+                                    <% if(user_in_ejs_file[i].type!="t" ){ %>
+                                        <% count=count+1 %>
+                                    <% } %>
+                                <% } %>
+                                <h3><%= count %> Students</h3> 
+                            </div>
+                        </div>
+                        
+                        <% for(var i=0;i<user_in_ejs_file.length;i++){ %>
+                        
+                            <% if(user_in_ejs_file[i].type!="t" ){ %>
+                        
+                                <p style="color:rgb(9, 126, 48);">
+                                    <b>
+                                        <%= user_in_ejs_file[i].username.toUpperCase() %>
+                                    </b>
+                            <% } %>
+                        <% } %>
+                    </div>
 
 
+                    <div role="tabpanel" class="tab-pane fade show " id="teacher">
+                        <div class="row">
+                            <div class="col col-sm-9">
+                                <h3>Teacher</h3>
+                            </div>
+                            <div class="col col-sm-3">
+                                <% for(var i=0;i<user_in_ejs_file.length;i++){ %>
+                                    <% if(user_in_ejs_file[i].type!="s" ){ %>
+                                        <% cnt=cnt+1 %>
+                                    <% } %>
+                                <% } %>
+                                <h3>
+                                    <%= cnt %> Teachers
+                                </h3>
+                            </div>
+                        </div>
+                        
+                        <% for(var i=0;i<user_in_ejs_file.length;i++){ %>
+                        
+                            <% if(user_in_ejs_file[i].type!="s" ){ %>
+                            
+                                <% x=user_in_ejs_file[i].username %>
+
+                                <p style="color:rgb(9, 126, 48);">
+                                    <b>
+                                        
+                                        <a href="/teacher/assignment/<%= x %>" target="_blank">
+                                            
+                                            <%= user_in_ejs_file[i].username.toUpperCase() %>   
+
+                                        </a>
+                                    </b>
+                            <% } %>
+                            
+                        <% } %>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+        
+                
+</div>
+
+<br>
+
+
+<br>
+
+
+<%- include('partials/footer.ejs') %>

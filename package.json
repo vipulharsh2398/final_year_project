@@ -35,6 +35,7 @@
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^6.1.0",
-    "popper.js": "^1.12.9"
+    "popper.js": "^1.12.9",
+    "web-push": "^3.4.4"
   }
 }

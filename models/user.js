@@ -6,7 +6,8 @@ var UserSchema=new mongo.Schema({
 	password:String,
 	email:String,
 	institute:String,
-	type:String
+	type:String,
+	subject:String
 });
 	
 UserSchema.plugin(passportLocalMongoose);

@@ -165,9 +165,15 @@ app.get("/loggedin", isLoggedIn, async function(req,res){
 
 		return assignment;
 	});
+	
+
 	var count=0;
 	var cnt=0;
 	var x;
+
+	var today=new Date();
+
+
 	User.find({},function(err,data){
 		if(err)
 		{
@@ -176,7 +182,7 @@ app.get("/loggedin", isLoggedIn, async function(req,res){
 		}
 		else
 		{
-			res.render("loggedin.ejs", {x:x,cnt:cnt,count : count,user_in_ejs_file:data,assignments,user:req.user, user_type : req.user.type, submitted : req.query.submitted});
+			res.render("loggedin.ejs", {today:today,x:x,cnt:cnt,count : count,user_in_ejs_file:data,assignments,user:req.user, user_type : req.user.type, submitted : req.query.submitted});
 		}
 
 	});
@@ -396,10 +402,15 @@ app.post("/register/t",function(req,res){
 
 	     		var ins=req.body.institute;
 	     		var em=req.body.email;
+				var sub=req.body.subject;
+
 				var tp='t';
+
 				user.institute=ins;
 				user.email=em;
 				user.type=tp;
+				user.subject=sub;
+				
 				user.save(function(err){
 					if(err)
 						console.log("Error");
