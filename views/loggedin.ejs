@@ -18,16 +18,26 @@
 							LOGOUT</a></li>
 
 					<% if(current_user){ %>
-
 						<li class="nav-item">
 							<a class="nav-link ml-5" href="#">
 								Signed In As : <%=current_user.username%>
 							</a>
 						</li>
+						
+						<li class="nav-item">
+							<a data-toggle="modal" data-target="#imagepop">
+						
+								<% if(current_user.image) { %>
+									<img src="/uploads/<%= current_user.image %>" alt="img" style="width: 40px; height: 40px;"
+										class="rounded-circle">
+								<% }else{ %>
+										<img src="https://www.computerhope.com/jargon/g/guest-user.jpg" alt="img"
+											style="width: 40px; height: 40px;" class="rounded-circle">
+								<% } %>
+							</a>
+						</li>
 
-						<% } %>
-
-
+					<% } %>
 				</ul>
 
 				<ul class="navbar-nav ms-auto">
@@ -51,6 +61,33 @@
 
 		</div>
 	</nav>
+
+<!-- moodal for image goes here -->
+
+<div class="modal" tabindex="-1" role="dialog" id="imagepop">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title"><%=current_user.username%></h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<% if(current_user.image) { %>
+					<img src="/uploads/<%= current_user.image %>" alt="img"  class="img-fluid">
+					<% }else{ %>
+						<img src="https://www.computerhope.com/jargon/g/guest-user.jpg" alt="img" 
+							class="img-fluid">
+					<% } %>
+			</div>
+			<!-- <div class="modal-footer">
+			</div> -->
+		</div>
+	</div>
+</div>
+
+<!-- moodal foe image ends here -->
 
 	<div class="modal fade" id="addAssignment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 		aria-hidden="true">
@@ -302,7 +339,8 @@
 						
 													<% if(assignment.comments){ for(let comment of assignment.comments){ %>
 														<div class="col col-sm-3">
-															<p>By- <%= comment.created_by.username %>
+															
+															<p> <%= comment.created_by.username %>
 															</p>
 														</div>
 														<div class="col col-sm-9">
@@ -488,11 +526,19 @@
 						<% for(var i=0;i<user_in_ejs_file.length;i++){ %>
 						
 							<% if(user_in_ejs_file[i].type!="t" ){ %>
-						
-								<p style="color:rgb(9, 126, 48);">
-									<b>
-										<%= user_in_ejs_file[i].username.toUpperCase() %>
-									</b>
+								<div class="row pl-2">
+									<% if(user_in_ejs_file[i].image) { %>
+										<img src="/uploads/<%= user_in_ejs_file[i].image %>" alt="img" style="width: 40px; height: 40px;"
+											class="rounded-circle mr-2">
+										<% }else{ %>
+											<img src="https://www.computerhope.com/jargon/g/guest-user.jpg" alt="img" style="width: 40px; height: 40px;"
+												class="rounded-circle mr-2">
+										<% } %>
+									<p style="color:rgb(9, 126, 48);">
+										<b>
+											<%= user_in_ejs_file[i].username.toUpperCase() %>
+										</b>
+								</div>
 							<% } %>
 						<% } %>
 					</div>
@@ -523,16 +569,25 @@
 
 								<p style="color:rgb(9, 126, 48);">
 									<b>
-										<a href="/teacher/assignment/<%= x %>" target="_blank">
+										<div class="row pl-2">
+											<% if(user_in_ejs_file[i].image) { %>
+												<img src="/uploads/<%= user_in_ejs_file[i].image %>" alt="img" style="width: 40px; height: 40px;" class="rounded-circle mr-2">
+												<% }else{ %>
+													<img src="https://www.computerhope.com/jargon/g/guest-user.jpg" alt="img" style="width: 40px; height: 40px;"
+														class="rounded-circle mr-2">
+											<% } %>
 											
-											<h4 style="display:inline;">
-												<%= user_in_ejs_file[i].username.toUpperCase() %>
-											</h4>
-										</a>
-											-
-											<h6 class="text-success" style="display:inline;">
-												<%= user_in_ejs_file[i].subject %>	
-											</h6>
+												<h4 style="display:inline;">
+													<%= user_in_ejs_file[i].username.toUpperCase() %>
+												</h4>
+												</a>
+												-
+												<h6 class="text-success" style="display:inline;">
+													<%= user_in_ejs_file[i].subject %>
+												</h6>
+											
+										</div>
+											
 										
 									</b>
 							<% } %>
