@@ -342,8 +342,16 @@
 													<% if(assignment.comments){ for(let comment of assignment.comments){ %>
 														<div class="col col-sm-3">
 															
-															<p> <%= comment.created_by.username %>
+															<% if(comment.created_by.image) { %>
+																<img src="/uploads/<%= comment.created_by.image %>" alt="img" class="rounded-circle" style="display:inline;width:30px; height:30px;">
+															<% }else{ %>
+																<img src="https://www.computerhope.com/jargon/g/guest-user.jpg" alt="img" class="rounded-circle" style="display:inline;width:30px; height:30px;">
+															<% } %>
+
+															<p style="display:inline">
+																 <%= comment.created_by.username %>
 															</p>
+
 														</div>
 														<div class="col col-sm-9">
 															<input type="text" value="<%= comment.name %>" class="form-control" id="comment"
@@ -465,7 +473,15 @@
 				
 													<% if(assignment.comments){ for(let comment of assignment.comments){ %>
 														<div class="col col-sm-3">
-															<p>By- <%= comment.created_by.username %>
+
+															<% if(comment.created_by.image) { %>
+																<img src="/uploads/<%= comment.created_by.image %>" alt="img" class="rounded-circle" style="display:inline;width:30px; height:30px;">
+															<% }else{ %>
+																<img src="https://www.computerhope.com/jargon/g/guest-user.jpg" alt="img" class="rounded-circle" style="display:inline;width:30px; height:30px;">
+															<% } %>
+
+															<p style="display:inline">
+																By- <%= comment.created_by.username %>
 															</p>
 														</div>
 														<div class="col col-sm-9">
@@ -678,8 +694,17 @@
 				
 													<% if(assignment.comments){ for(let comment of assignment.comments){ %>
 														<div class="col col-sm-3">
-															<p>By- <%= comment.created_by.username %>
+															
+															<% if(comment.created_by.image) { %>
+																<img src="/uploads/<%= comment.created_by.image %>" alt="img" class="rounded-circle" style="display:inline;width:30px; height:30px;">
+															<% }else{ %>
+																<img src="https://www.computerhope.com/jargon/g/guest-user.jpg" alt="img" class="rounded-circle" style="display:inline;width:30px; height:30px;">
+															<% } %>
+
+															<p style="display:inline">
+																 <%= comment.created_by.username %>
 															</p>
+
 														</div>
 														<div class="col col-sm-9">
 															<input type="text" value="<%= comment.name %>" class="form-control"
@@ -762,8 +787,17 @@
 				
 													<% if(assignment.comments){ for(let comment of assignment.comments){ %>
 														<div class="col col-sm-3">
-															<p>By- <%= comment.created_by.username %>
+															
+															<% if(comment.created_by.image) { %>
+																<img src="/uploads/<%= comment.created_by.image %>" alt="img" class="rounded-circle" style="display:inline;width:30px; height:30px;">
+															<% }else{ %>
+																<img src="https://www.computerhope.com/jargon/g/guest-user.jpg" alt="img" class="rounded-circle" style="display:inline;width:30px; height:30px;">
+															<% } %>
+
+															<p style="display:inline">
+																 <%= comment.created_by.username %>
 															</p>
+
 														</div>
 														<div class="col col-sm-9">
 															<input type="text" value="<%= comment.name %>" class="form-control"

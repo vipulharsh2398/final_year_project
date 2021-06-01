@@ -259,7 +259,7 @@ app.get("/teacher/assignment/:username",function(req,res){
 
 				return assignment;
 			});
-
+			
 			res.render("newpage.ejs",{user_type:req.user.type,assignments:data});
 		}
 	});
