@@ -7,7 +7,8 @@ var UserSchema=new mongo.Schema({
 	email:String,
 	institute:String,
 	type:String,
-	subject:String
+	subject:String,
+	image : String
 });
 	
 UserSchema.plugin(passportLocalMongoose);

@@ -267,24 +267,12 @@ app.get("/teacher/assignment/:username",function(req,res){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 app.post("/login",passport.authenticate("local",{
 	successRedirect:"/loggedin",
 	failureRedirect:"/loginfail"
 }),function(req,res){
 });
+
 
 
 app.post("/addassignment", upload.single('assignment_file'), async (req, res) => {
@@ -301,8 +289,6 @@ app.post("/addassignment", upload.single('assignment_file'), async (req, res) =>
 
 	return res.redirect("/loggedin");
 })
-
-
 
 app.post("/submitassignment", [isLoggedIn, upload.single('stud_assignment_file')], async (req, res) => {
 	const filename = req.file ? req.file.filename : null
@@ -327,8 +313,6 @@ app.post("/submitassignment", [isLoggedIn, upload.single('stud_assignment_file')
 	return res.redirect('/loggedin?submitted=true')
 })
 
-
-
 app.post("/assignmentcomment", isLoggedIn, async (req, res) => {
 	
 	const comment = req.body.comment;
@@ -352,9 +336,7 @@ app.post("/assignmentcomment", isLoggedIn, async (req, res) => {
 	return res.redirect('/loggedin')
 })
 
-
-
-app.post("/register",function(req,res){
+app.post("/register",upload.single('image'),function(req,res){
 	User.register(new User({username:req.body.username}),req.body.password,function(err,user){
 		if (err) 
 	      {
@@ -366,7 +348,8 @@ app.post("/register",function(req,res){
 	     	passport.authenticate("local")(req,res,function(){
 	     		// req.flash("success","Successfully registered as student");
 
-
+				const filename = req.file ? req.file.filename : null
+				user.image = filename;
 	     		var ins=req.body.institute;
 	     		var em=req.body.email;
 				var tp='s';
@@ -387,7 +370,7 @@ app.post("/register",function(req,res){
 });
 
 
-app.post("/register/t",function(req,res){
+app.post("/register/t",upload.single('image'),function(req,res){
 	User.register(new User({username:req.body.username}),req.body.password,function(err,user){
 		if (err) 
 	      {
@@ -399,7 +382,8 @@ app.post("/register/t",function(req,res){
 	     	passport.authenticate("local")(req,res,function(){
 	     		// req.flash("success","Successfully registered as teacher");
 
-
+				const filename = req.file ? req.file.filename : null
+				user.image = filename;
 	     		var ins=req.body.institute;
 	     		var em=req.body.email;
 				var sub=req.body.subject;
