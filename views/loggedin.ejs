@@ -186,13 +186,11 @@
 						<li class="nav-item">
 							<a class="nav-link" href="#due" role="tab" data-toggle="tab">Due Assignments</a>
 						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#announce" role="tab" data-toggle="tab">Announcements</a>
+						</li>
 
 					<%}%>
-
-					
-
-
-
 				</ul>
 				<div class="tab-content">
 					<div role="tabpanel" class="tab-pane fade show active" id="assignment">
@@ -663,7 +661,85 @@
 						<% } %>
 
 					</div>
-
+					<div role="tabpanel" class="tab-pane fade show " id="announce">
+						<% for(let assignment of assignments){ %>
+						
+							<%if(!assignment.file) {%>
+						
+								<div class="row">
+						
+									<div class="col col-sm">
+						
+										<div class="card align-self-center">
+						
+											<img class="card-img-top" src="4.png" alt="Card image cap" style="height: 200px;">
+						
+											<div class="card-body">
+						
+												<form method="post" action="/submitassignment" enctype="multipart/form-data">
+						
+													<input type="hidden" value="<%= assignment._id %>" name="assignment">
+						
+						
+													<p class="card-text" style="float:right;background:lightgreen;">Teacher: <b>
+															<%= assignment.owner %>
+														</b>
+													</p>
+						
+						
+													<h5 class="card-title">
+														<%= assignment.name %>
+													</h5>
+													<p class="card-text">
+														<%= assignment.description %>
+													</p>							
+											</div>
+						
+											<div class="card-footer text-muted">
+						
+												<div class="row">
+						
+													<% if(assignment.comments){ for(let comment of assignment.comments){ %>
+														<div class="col col-sm-3">
+															<p>By- <%= comment.created_by.username %>
+															</p>
+														</div>
+														<div class="col col-sm-9">
+															<input type="text" value="<%= comment.name %>" class="form-control" id="comment"
+																name="comment" placeholder="comment" readonly>
+														</div>
+														<% }} %>
+						
+												</div>
+						
+												<form id="commentform" action="/assignmentcomment" method="post">
+						
+													<div class="row">
+														<input type="hidden" value="<%= assignment._id %>" name="assignment">
+						
+														<div class="col col-sm-11">
+															<input type="text" class="form-control" id="comment" name="comment"
+																placeholder="comment" required>
+														</div>
+						
+														<div class="col col-sm-1">
+															<button type="submit"><span class="fa fa-paper-plane fa-lg"></span></button>
+														</div>
+						
+													</div>
+						
+												</form>
+						
+											</div>
+						
+										</div>
+						
+									</div>
+						
+								</div>
+								<%} %>
+						<% } %>
+					</div>
 
 				</div>
 			</div>
