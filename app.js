@@ -77,7 +77,7 @@ passport.deserializeUser(User.deserializeUser());
 
 
 
-mongo.connect("mongodb://localhost/final_year");
+mongo.connect("mongodb+srv://vipmod:goluachomua@g-class.4iryu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
 
 
 
