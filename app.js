@@ -237,7 +237,7 @@ app.get("/admin/feedback",function(req,res){
 
 
 app.get("/teacher/assignment/:username",function(req,res){
-	Assignment.find({owner:req.params.username},function(err,data){
+	Assignment.find({owner:req.params.username}).populate('comments.created_by').exec(function(err,data){
 		if(err)
 		{
 			console.log(err);
