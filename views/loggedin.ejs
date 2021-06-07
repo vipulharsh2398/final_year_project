@@ -4,7 +4,7 @@
 	<nav class="navbar navbar-dark navbar-expand-sm  fixed-top">
 		<div class="container">
 
-			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#Navbar"
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#Navbar"
 				aria-controls="Navbar" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
@@ -809,27 +809,24 @@
 											<div class="card-footer text-muted">
 				
 												<div class="row">
-				
 													<% if(assignment.comments){ for(let comment of assignment.comments){ %>
-														<div class="col col-sm-3">
-															
+														<div class="col col-sm-3">	
 															<% if(comment.created_by.image) { %>
-																<img src="/uploads/<%= comment.created_by.image %>" alt="img" class="rounded-circle" style="display:inline;width:30px; height:30px;">
+																<img src="/uploads/<%= comment.created_by.image %>" alt="img" 
+																class="rounded-circle" style="display:inline;width:30px; height:30px;">
 															<% }else{ %>
-																<img src="https://www.computerhope.com/jargon/g/guest-user.jpg" alt="img" class="rounded-circle" style="display:inline;width:30px; height:30px;">
+																<img src="https://www.computerhope.com/jargon/g/guest-user.jpg" alt="img" 
+																class="rounded-circle" style="display:inline;width:30px; height:30px;">
 															<% } %>
-
 															<p style="display:inline">
 																 <%= comment.created_by.username %>
 															</p>
-
 														</div>
 														<div class="col col-sm-9">
 															<input type="text" value="<%= comment.name %>" class="form-control"
 																id="comment" name="comment" placeholder="comment" readonly>
 														</div>
 														<% }} %>
-				
 												</div>
 				
 												<form id="commentform" action="/assignmentcomment" method="post">
@@ -886,6 +883,10 @@
 
 
 <br>
-
+<script type="text/javascript">
+	$('#comment').emojioneArea({
+		PickerPosition: 'right'
+	});
+</script>
 
 <%- include('partials/footer.ejs') %>

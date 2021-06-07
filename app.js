@@ -9,6 +9,7 @@ var expSanitizer=require('express-sanitizer');
 const path = require('path');
 const multer = require('multer')
 var flash=require("connect-flash");
+var nodemailer = require('nodemailer');
 
 //Upload files
 const upload_directory = `uploads/`
@@ -51,8 +52,17 @@ var Feedback=require("./models/feedback_model");
 var passport 				=require('passport');
 const LocalStrategy 		= require('passport-local'); 
 var passportLocalMongoose 	=require("passport-local-mongoose");
+const user = require('./models/user');
 
 
+
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'modimam123@gmail.com',
+    pass: ''
+  }
+});
 
 
 app.use(require("express-session")({
@@ -77,8 +87,9 @@ passport.deserializeUser(User.deserializeUser());
 
 
 
-mongo.connect("mongodb+srv://vipmod:goluachomua@g-class.4iryu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
+// mongo.connect("mongodb+srv://vipmod:goluachomua@g-class.4iryu.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
 
+mongo.connect("mongodb://localhost/final_year");
 
 
 
@@ -284,8 +295,26 @@ app.post("/addassignment", upload.single('assignment_file'), async (req, res) =>
 		file : filename,
 		owner:req.user.username
 	})
-
 	await assignment.save()
+
+	// for (const name of user){
+	// 	if (name.type!='t'){
+	// 		var mailOptions = {
+	// 				from: 'modimam123@gmail.com',
+	// 				to: name.email,
+	// 				subject: 'Assignment',
+	// 				text: `hii `+ name.username + ` you have a new assignment on `+ req.body.name + ` due date is ` + req.body.date;
+	// 				};
+				
+	// 			transporter.sendMail(mailOptions, function(error, info){
+	// 				if (error) {
+	// 					console.log(error);
+	// 				} else {
+	// 					console.log('Email sent: ' + info.response);
+	// 				}
+	// 				});
+	// 	}
+	// }
 
 	return res.redirect("/loggedin");
 })
@@ -336,6 +365,10 @@ app.post("/assignmentcomment", isLoggedIn, async (req, res) => {
 	return res.redirect('/loggedin')
 })
 
+
+
+
+
 app.post("/register",upload.single('image'),function(req,res){
 	User.register(new User({username:req.body.username}),req.body.password,function(err,user){
 		if (err) 
@@ -362,6 +395,20 @@ app.post("/register",upload.single('image'),function(req,res){
 					else
 						console.log("Everything worked fine");
 				});
+				var mailOptions = {
+					from: 'modimam123@gmail.com',
+					to: em,
+					subject: 'G-class Registration',
+					text: `Successfully Registered to G-class`
+					};
+				
+				transporter.sendMail(mailOptions, function(error, info){
+					if (error) {
+						console.log(error);
+					} else {
+						console.log('Email sent: ' + info.response);
+					}
+					});
 
 	     		res.redirect("/registered");
 	     	})
@@ -401,6 +448,21 @@ app.post("/register/t",upload.single('image'),function(req,res){
 					else
 						console.log("Everything worked fine");
 				});
+
+				var mailOptions = {
+					from: 'modimam123@gmail.com',
+					to: em,
+					subject: 'G-class Registration',
+					text: `Successfully Registered to G-class`
+					};
+				
+				transporter.sendMail(mailOptions, function(error, info){
+					if (error) {
+						console.log(error);
+					} else {
+						console.log('Email sent: ' + info.response);
+					}
+					});
 
 	     		res.redirect("/registered");
 	     	})
